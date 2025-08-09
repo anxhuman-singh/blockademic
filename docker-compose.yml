@@ -1,0 +1,24 @@
+services:
+  mongo-api:
+    build:
+      context: ./mongo-api
+    expose:
+      - "5000:"                 
+    environment:
+      - MONGO_URI = "mongodb+srv://admin:O9T7xm9EepCZ7Cv3@blockademic.jotrowo.mongodb.net/?retryWrites=true&w=majority&appName=blockademic"
+    networks:
+      - app-network
+
+  main-app:
+    build:
+      context: ./main-app
+    ports:
+      - "3000:3000"                
+    depends_on:
+      - mongo-api
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
